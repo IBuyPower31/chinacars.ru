@@ -1,0 +1,52 @@
+<div class="configurator{# col-12 col-md-12 col-lg-12 col-xl-8"#}">
+    <div class="configurator-title">Конфигуратор комплектации машин</div>
+    <div class="configurator-body">
+        <div class="col-sm-6 left-block">
+            Тест
+        </div>
+        <div class="col-sm-6 right-block">
+            <div class="configurator-select">
+                <label class="configurator-name" for="mark">Марка автомобиля</label>
+                <select id="mark">
+                    <option data-id="0" selected hidden>Не выбрано</option>
+                    {% for item in marks %}
+                        <option data-id="{{ item.manufacturer_id }}">{{ item.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="configurator-select">
+                <label class="configurator-name">Модель автомобиля</label>
+                <select id="model">
+                    <option data-id="0" selected>Не выбрано</option>
+                </select>
+            </div>
+            <div class="configurator-select">
+                <label class="configurator-name">Комплектация</label>
+                <select id="complectation"></select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+$("#mark").on("change", function(){
+    var manufacturer_id = $("#mark option:selected").attr('data-id');
+
+    $.ajax({
+        url: 'index.php?route=common/configurator/getModels',
+        type: "POST",
+        dataType: "json",
+        data: "&manufacturer_id=" + manufacturer_id,
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+        },
+        success: function (data) {
+            console.log(data);
+            data.forEach(element => {
+                $('#model').append('<option value="' + element + '">' + element + '</option>');
+            });
+        }
+    });
+})
+</script>

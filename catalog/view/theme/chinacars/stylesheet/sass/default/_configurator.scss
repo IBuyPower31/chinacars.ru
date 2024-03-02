@@ -1,0 +1,65 @@
+$black: #444;
+$red: #e42e2c;
+$white: #ffffff;
+$gray: #E7eaea;
+
+.configurator{
+    background: $white;
+    width: 100%;
+    border: 1px solid $black;
+    padding-left: 0;
+    padding-right: 0;
+
+    .configurator-title{
+        border: 1px solid $gray;
+        color: $black;
+        font-weight: 500;
+        font-size: 25px;
+        padding: 15px;
+    }
+
+    .configurator-body{
+        border: 1px solid $gray;
+        display: flex;
+        border-top: 0;
+
+        .col-sm-6{
+            padding: 15px;
+
+            &.left-block{
+
+            }
+
+            &.right-block{
+                display: flex;
+                flex-direction: column;
+
+
+
+                .configurator-select{
+                    display: flex;
+                    flex-direction: column;
+                    margin: 10px 0;
+
+                    .configurator-name{
+                        font-size: 16px;
+                        font-weight: 400;
+                        color: $black;
+                    }
+
+                    select{
+                        background: white;
+                        border: 1px solid #E7EAEA;
+                        font-weight: 400;
+                        font-size: 14px;
+                        height: 26px;
+                        line-height: 145%;
+                        color: #343434;
+                    }
+
+                }
+            }
+
+        }
+    }
+}
