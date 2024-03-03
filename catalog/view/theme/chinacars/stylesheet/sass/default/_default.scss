@@ -1,3 +1,9 @@
+$black: #444;
+$red: #e42e2c;
+$white: #ffffff;
+$gray: #E7eaea;
+$button: #FF6569;
+
 body {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
@@ -110,7 +116,6 @@ div.required .control-label:before {
 }
 /* top */
 #top {
-    background-color: #f2f8fd;
     border-bottom: 1px solid #e4f1fc;
     padding: 4px 0px 3px 0;
     margin: 0 0 20px 0;
@@ -265,10 +270,8 @@ div.required .control-label:before {
 }
 /* menu -fix */
 #menu {
-    background-color: #376aca;
     background-image: linear-gradient(to bottom, #4979cf, #2f64ca);
     background-repeat: repeat-x;
-    border-color: #2f64ca #2f64ca #2e63ca;
     min-height: 40px;
 }
 #menu .nav > li > a {
@@ -384,14 +387,16 @@ div.required .control-label:before {
 footer {
     margin-top: 30px;
     padding-top: 30px;
-    background-color: #203866;
+    background-color: $red;
     border-top: 1px solid #e4f1fc;
     color: #e2e2e2;
 }
-footer hr {
-    border-bottom: 1px solid #274783;
-    border-top: 1px solid #1b2e53;
+
+footer .container *{
+    color: $white;
 }
+
+
 footer a {color: #dee7f9;}
 footer a:hover, footer a:focus {color: #fff;}
 footer h5 {
@@ -413,35 +418,7 @@ footer p {text-align: right;}
     border: 1px solid #e4f1fc;
     background-color: #f2f8fd;
 }
-.breadcrumb i {
-    font-size: 15px;
-}
-.breadcrumb > li {
-    text-shadow: 0 1px 0 #FFF;
-    padding: 0 20px;
-    position: relative;
-    white-space: nowrap;
-    line-height: 37px;
-}
-.breadcrumb > li + li:before {
-    content: '';
-    padding: 0;
-}
-.breadcrumb > li:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 5px;
-    right: 0;
-    width: 26px;
-    height: 26px;
-    border-right: 1px solid #DDD;
-    border-bottom: 1px solid #DDD;
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-}
+
 html[dir=rtl] .breadcrumb > li::after {
     top: -3px;
     left: -5px;
@@ -576,10 +553,9 @@ html[dir=rtl] .breadcrumb > li::after {
 .btn-inverse {
     color: #ffffff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    background-color: #363636;
-    background-image: linear-gradient(to bottom, #444444, #222222);
-    background-repeat: repeat-x;
-    border-color: #222222 #222222 #000000;
+    background-color: $black;
+    border: none;
+    border-radius: 5px;
 }
 .btn-inverse:hover, .btn-inverse:active, .btn-inverse.active, .btn-inverse.disabled, .btn-inverse[disabled] {
     background-color: #222222;
@@ -627,13 +603,14 @@ html[dir=rtl] .breadcrumb > li::after {
 
 /* product list */
 .product-thumb {
-    border: 1px solid #f3f8fd;box-shadow: 0 1px 4px rgb(236, 244, 252);
+    border: 1px solid #f3f8fd;
+    box-shadow: 0 1px 4px rgb(252, 236, 241);
     margin-bottom: 20px;
     overflow: auto;
 }
 .product-thumb:hover {
-    border-color: #edf7ff;
-    box-shadow: 0 1px 6px rgb(209, 233, 255);
+    border-color: $button;
+    box-shadow: 0 1px 6px rgb(255, 209, 209);
 }
 .product-thumb .image {
     text-align: center;
@@ -649,7 +626,7 @@ html[dir=rtl] .breadcrumb > li::after {
 .product-grid .product-thumb .image {
     float: none;
 }
-.thumbnail, .img-thumbnail {border: 1px solid #e4f1fc;}
+.thumbnail, .img-thumbnail {border: 1px solid #e42;}
 
 @media (min-width: 767px) {
     .product-list .product-thumb .image {
@@ -659,10 +636,18 @@ html[dir=rtl] .breadcrumb > li::after {
 }
 .product-thumb h4 {
     font-weight: bold;
+
+    a{
+        color: $black;
+    }
 }
 .product-thumb .caption {
     padding: 0 20px;
     min-height: 174px;
+
+    p{
+        color: #434343;
+    }
 }
 .product-list .product-thumb .caption {
     margin-left: 230px;
@@ -704,7 +689,7 @@ h2.price {
     margin: 0;
 }
 .product-thumb .price {
-    color: #444;
+    color: gold;
     font-size: 16px;
 }
 .product-thumb .price-new {
@@ -721,8 +706,7 @@ h2.price {
     display: block;
 }
 .product-thumb .button-group {
-    border-top: 1px solid #f6f9fd;
-    background-color: #eee;
+    border-top: 1px solid #E7EAEA;
     overflow: auto;
 }
 .product-list .product-thumb .button-group {
@@ -738,8 +722,8 @@ h2.price {
     border: none;
     display: inline-block;
     float: left;
-    background-color: #f2f8fd;
-    color: #888;
+    background-color: $red;
+    color: white;
     line-height: 38px;
     font-weight: bold;
     text-align: center;
@@ -750,8 +734,8 @@ h2.price {
     border-left: 1px solid #e4f1fc;
 }
 .product-thumb .button-group button:hover {
-    color: #444;
-    background-color: #ebf4ff;
+    color: #343434;
+    background-color: #E42;
     text-decoration: none;
     cursor: pointer;
 }
@@ -895,4 +879,18 @@ html[dir=rtl] #cart .dropdown-menu {
         float: right;
     }
 
+}
+
+a.thumbnail:hover{
+    border: 1px solid $red !important;
+}
+
+#search {
+    .form-control{
+        border: 1px solid $red;
+    }
+
+    .btn-default{
+
+    }
 }

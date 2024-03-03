@@ -565,7 +565,19 @@ class ModelCatalogProduct extends Model {
     }
 
     public function getComplectation($data){
-        $query =  $this->db->query("SELECT DISTINCT location FROM " . DB_PREFIX . "product WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+        $query =  $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE manufacturer_id = '" . (int)$data['manufacturer_id'] . "' AND location = '" . $data['model_name'] . "'");
+
+        return $query->rows;
+    }
+
+    public function getCar($data){
+        $query =  $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE manufacturer_id = '" . (int)$data['manufacturer_id'] . "' AND location = '" . $data['model_name'] . "' AND type = '" . $data['type'] . "'");
+
+        return $query->row;
+    }
+
+    public function getAllProducts(){
+        $query =  $this->db->query("SELECT image FROM " . DB_PREFIX . "product");
 
         return $query->rows;
     }

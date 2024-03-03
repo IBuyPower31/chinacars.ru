@@ -1,0 +1,44 @@
+$black: #444;
+$red: #e42e2c;
+$white: #ffffff;
+$gray: #E7eaea;
+
+// Обратные ссылки
+.breadcrumb{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border: none;
+    background: none;
+
+
+    li {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+
+        &:not(:last-child):after{
+            content: ">";
+            color: $red;
+            font-weight: 400;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        &:before{
+            content: unset !important;
+            border: unset;
+
+        }
+
+        a{
+            color: $red;
+            font-weight: 400;
+            font-size: 14px;
+            padding: 0 7px;
+        }
+    }
+}

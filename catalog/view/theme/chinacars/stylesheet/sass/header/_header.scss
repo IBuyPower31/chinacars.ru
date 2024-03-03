@@ -1,0 +1,23 @@
+$black: #444;
+$red: #e42e2c;
+$white: #ffffff;
+$gray: #E7eaea;
+
+#menu{
+    background: $red;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+}
+
+#top{
+    background: #E7EAEA;
+}
+
+.header-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

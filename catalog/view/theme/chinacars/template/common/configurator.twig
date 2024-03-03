@@ -2,7 +2,19 @@
     <div class="configurator-title">Конфигуратор комплектации машин</div>
     <div class="configurator-body">
         <div class="col-sm-6 left-block">
-            Тест
+
+            <div id="image-block" class="swiper">
+                <div class="swiper-wrapper">
+                    {% for image in images%}
+                        <div class="swiper-slide">
+                            <img class="configurator-swiper-image" src="{{ image }}" alt="Картинка">
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+
         </div>
         <div class="col-sm-6 right-block">
             <div class="configurator-select">
@@ -22,31 +34,130 @@
             </div>
             <div class="configurator-select">
                 <label class="configurator-name">Комплектация</label>
-                <select id="complectation"></select>
+                <select id="complectation">
+                    <option data-id="0" selected>Не выбрано</option>
+                </select>
             </div>
+            <div class="configurator-price" style="display: none;">Цена: <span></span></div>
+            <div class="dynamic-cart"></div>
         </div>
     </div>
 </div>
+<script>
+    const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
 
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination',
+        },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+    });
+
+</script>
 <script type="text/javascript">
 
-$("#mark").on("change", function(){
-    var manufacturer_id = $("#mark option:selected").attr('data-id');
+    $(document).ready(function (){
 
-    $.ajax({
-        url: 'index.php?route=common/configurator/getModels',
-        type: "POST",
-        dataType: "json",
-        data: "&manufacturer_id=" + manufacturer_id,
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert(errorThrown);
-        },
-        success: function (data) {
-            console.log(data);
-            data.forEach(element => {
-                $('#model').append('<option value="' + element + '">' + element + '</option>');
-            });
-        }
+    })
+
+    // Подгрузка моделей
+    $("#mark").on("change", function(){
+        $("#model").empty();
+        $empty_option = '<option data-id="0" selected>Не выбрано</option>';
+        $("#model").html($empty_option);
+        $("#complectation").empty();
+        $("#complectation").html($empty_option);
+        // Прячем лишнее
+        $(".dynamic-cart, .configurator-price").slideUp();
+        var manufacturer_id = $("#mark option:selected").attr('data-id');
+
+        $.ajax({
+            url: 'index.php?route=common/configurator/getModels',
+            type: "POST",
+            dataType: "json",
+            data: "&manufacturer_id=" + manufacturer_id,
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+            },
+            success: function (data) {
+                data.forEach(element => {
+                    $('#model').append('<option value="' + element + '">' + element + '</option>');
+                });
+            }
+        });
+    })
+
+    // Подгрузка комплектаций
+    $("#model").on("change", function(){
+        $("#complectation").empty();
+        $empty_option = '<option data-id="0" value="" selected>Не выбрано</option>';
+        $("#complectation").html($empty_option);
+
+        // Прячем лишнее
+        $(".dynamic-cart, .configurator-price").slideUp();
+
+       var manufacturer_id =  $("#mark option:selected").attr('data-id');
+       var model_name = $("#model option:selected").val();
+
+        $.ajax({
+            url: 'index.php?route=common/configurator/getComplectation',
+            type: "POST",
+            dataType: "json",
+            data: "&manufacturer_id=" + manufacturer_id + "&model_name=" + model_name,
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+            },
+            success: function (data) {
+                console.log(data);
+                data.forEach(element => {
+                    $('#complectation').append('<option value="' + element + '">' + element + '</option>');
+                });
+            }
+        });
     });
-})
-</script>
+
+    $("#complectation").on("change", function (){
+        var manufacturer_id = 0;
+        var model_name = '';
+        var type = '';
+
+        setTimeout(function (){
+            manufacturer_id =  $("#mark option:selected").attr('data-id');
+            model_name = $("#model option:selected").val();
+            type = $("#complectation option:selected").val();
+
+            if (manufacturer_id && model_name && type){
+                $(".configurator .button-cart-add").removeAttr("disabled");
+                $.ajax({
+                    url: 'index.php?route=common/configurator/getCar',
+                    type: "POST",
+                    dataType: "json",
+                    data: "&manufacturer_id=" + manufacturer_id + "&model_name=" + model_name + "&type=" + type,
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    },
+                    success: function (json) {
+                        console.log(json);
+                        $(".configurator").remove($(".button-cart-add"));
+                        $product_id = String(json['product_id']);
+                        $price = String(json['price']);
+                        $image = String(json['image']);
+                        $button_cart = "<button class='button-cart-add' onclick='cart.add(" + $product_id + ")'>Добавить в корзину</button>";
+                        $(".configurator .dynamic-cart").html($button_cart).slideDown();
+                        $(".configurator-price").slideDown();
+                        $(".configurator-price span").html($price);
+                    }
+                });
+            }
+        }, 300);
+    });
+    </script>
