@@ -138,7 +138,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-location">{{ entry_location }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="location" value="{{ location }}" placeholder="{{ entry_location }}" id="input-location" class="form-control"/>
+                  <input type="text" name="location" value="{{ location }}" placeholder="{{ entry_location }}" id="input-location" class="form-control"/><input type="hidden" name="model_id" value="{{ model_id }}"/>
                 </div>
               </div>
               <div class="form-group">
@@ -1162,6 +1162,32 @@
 		  $('input[name=\'manufacturer_id\']').val(item['value']);
 	  }
   });
+    // Model
+    $('input[name=\'location\']').autocomplete({
+      'source': function(request, response) {
+        $.ajax({
+          url: 'index.php?route=catalog/product/autocompleteModel&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+          dataType: 'json',
+          success: function(json) {
+            json.unshift({
+              model_id: 0,
+              name: '{{ text_none }}'
+            });
+
+            response($.map(json, function(item) {
+              return {
+                label: item['name'],
+                value: item['model_id']
+              }
+            }));
+          }
+        });
+      },
+      'select': function(item) {
+        $('input[name=\'location\']').val(item['label']);
+        $('input[name=\'location\']').val(item['value']);
+      }
+    });
 
   // Category
   $('input[name=\'category\']').autocomplete({

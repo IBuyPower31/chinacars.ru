@@ -729,4 +729,10 @@ class ModelCatalogProduct extends Model {
 
 		return $query->row['total'];
 	}
+
+    public function getModels($data){
+        $query =  $this->db->query("SELECT DISTINCT model_id, name FROM " . DB_PREFIX . "model WHERE name LIKE '" . $this->db->escape($data['filter_name']) . "%'");
+
+        return $query->rows;
+    }
 }
